@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Top places</title>
+  </head>
+  <body>
+    <section class="app">
+      <form class="form hidden">
+        <div class="form__row">
+          <div class="form__label">Type</div>
+          <select class="form__input form__input--type">
+            <option value="storefront">Store</option>
+            <option value="restaurant">Restaurant</option>
+            <option value="beer">Bar</option>
+            <option value="cafe">Cafe</option>
+          </select>
+        </div>
+
+        <div class="form__row">
+          <label class="form__label">Name</label>
+          <input required placeholder="Name" class="form__input form__input--name" type="text" />
+        </div>
+
+        <div class="form__row">
+          <label class="form__label">Comments</label>
+          <input
+            required
+            placeholder="Comments"
+            class="form__input form__input--comments"
+            type="text"
+          />
+        </div>
+
+        <div class="rating">
+          <div class="rating__items">
+            <input class="rating__item" type="radio" name="rating" id="star-5" value="5" />
+            <label class="rating__label" for="star-5"
+              ><ion-icon name="star-outline"></ion-icon
+            ></label>
+
+            <input class="rating__item" type="radio" name="rating" id="star-4" value="4" />
+            <label class="rating__label" for="star-4"
+              ><ion-icon name="star-outline"></ion-icon
+            ></label>
+
+            <input class="rating__item" type="radio" name="rating" id="star-3" value="3" />
+            <label class="rating__label" for="star-3"
+              ><ion-icon name="star-outline"></ion-icon
+            ></label>
+
+            <input class="rating__item" type="radio" name="rating" id="star-2" value="2" />
+            <label class="rating__label" for="star-2"
+              ><ion-icon name="star-outline"></ion-icon
+            ></label>
+
+            <input class="rating__item" type="radio" name="rating" id="star-1" value="1" />
+            <label class="rating__label" for="star-1"
+              ><ion-icon name="star-outline"></ion-icon
+            ></label>
+          </div>
+          <!-- <div class="rating__score">No rating</div> -->
+        </div>
+
+        <button class="form__btn">SAVE</button>
+        <button class="form__close-btn"><ion-icon name="close-outline"></ion-icon></button>
+      </form>
+      <div class="overlay hidden"></div>
+      <div class="sidebar">
+        <div class="logo">
+          <ion-icon class="logo__icon" name="map-outline"></ion-icon>
+          <h2 class="logo__title">my places</h2>
+        </div>
+
+        <div class="filter-buttons">
+          <button class="filter-button filter-button--active" data-filter="all">All</button>
+          <button class="filter-button" data-filter="storefront">Store</button>
+          <button class="filter-button" data-filter="restaurant">Restaurant</button>
+          <button class="filter-button" data-filter="beer">Bar</button>
+          <button class="filter-button" data-filter="cafe">Cafe</button>
+        </div>
+        <!-- <ul class="places"> -->
+        <div class="wrapper">
+          <ul class="places"></ul>
+          <!-- place item -->
+          <!-- <li class="place" data-id="1234567890">
+            <div class="place__top">
+              <div class="place__icon">
+                <ion-icon name="restaurant-outline"></ion-icon>
+              </div>
+              <h2 class="place__title">Vapiano</h2>
+              <div class="place__rating">
+                <span class="place__star">
+                  <ion-icon name="star-outline"></ion-icon>
+                </span>
+                <span>4.5</span>
+              </div>
+            </div>
+            <p class="place__comment">
+              Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
+          </li> -->
+          <!-- </ul> -->
+        </div>
+      </div>
+
+      <div id="map"></div>
+    </section>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>

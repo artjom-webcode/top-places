@@ -1,0 +1,370 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+
+:root {
+  --color--1: #f0ebe4;
+  --color--2: #303131;
+  --color--3: #f49a07;
+
+  --border-radius--1: 12px;
+  --font--1: "Josefin Sans", serif;
+}
+
+/*=============== BASE ===============*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "Josefin Sans", serif;
+  font-size: 14px;
+  /* background-color: var(--color--1); */
+  color: var(--color--2);
+  padding: 25px;
+  height: 100vh;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+button {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+/*=============== app ===============*/
+.app {
+  display: flex;
+  height: 100%;
+  position: relative;
+}
+.sidebar {
+  flex-basis: 400px;
+  background-color: var(--color--1);
+  /* padding: 3rem 5rem 4rem 5rem; */
+  /* padding: 30px 50px 40px 50px; */
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.wrapper {
+  overflow-y: scroll;
+}
+.filter-buttons {
+  padding: 16px;
+  /* background-color: red; */
+}
+.filter-button {
+  border-radius: 12px;
+  padding: 8px 14px;
+  border: 1px solid var(--color--2);
+  font-size: 12px;
+  cursor: pointer;
+  background-color: var(--color--1);
+}
+.filter-button--active {
+  background-color: var(--color--2);
+  color: var(--color--1);
+}
+.filter-button:hover {
+  background-color: var(--color--2);
+  color: var(--color--1);
+}
+.logo {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 8px 24px 8px;
+}
+.logo__icon {
+  font-size: 38px;
+  color: var(--color--3);
+}
+.logo__title {
+  font-size: 30px;
+  font-weight: 400;
+}
+.filter {
+  margin-top: 48px;
+}
+
+.places {
+  margin-top: 12px;
+  /* height: 77vh; */
+}
+.places::-webkit-scrollbar {
+  width: 0;
+}
+.place {
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+.place:hover {
+  transform: translateY(-3px);
+  /* transform: translateX(-100px); */
+}
+
+.form {
+  top: 50%;
+  left: 50%;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  background-color: var(--color--3);
+  border-radius: var(--border-radius--1);
+  border: 2px solid var(--color--2);
+  padding: 24px 16px;
+
+  position: absolute;
+  /* for effect */
+  height: 325px;
+  opacity: 100%;
+  transition: all 1s, transform 1ms;
+}
+.overlay {
+  position: absolute;
+  z-index: 9000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(48, 49, 49, 0.57);
+  backdrop-filter: blur(3px);
+}
+.overlay.hidden {
+  display: none;
+}
+
+.form.hidden {
+  /* display: none; */
+  transform: translateY(-30rem);
+  /* height: 0; */
+  /* padding: 0 20px; */
+  /* margin-bottom: 0; */
+  opacity: 0;
+}
+.form__row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+.form__label {
+  font-size: 16px;
+}
+.form__input {
+  padding: 8px;
+  border: 2px solid var(--color--2);
+  border-radius: 8px;
+}
+.form__input:focus {
+  outline: none;
+  background-color: #fff;
+}
+.form__btn {
+  margin-top: 16px;
+  width: 100%;
+  padding: 12px;
+  color: var(--color--1);
+  background-color: var(--color--2);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.5s;
+  /* font-weight: 600; */
+  font-size: 16px;
+  font-family: var(--font--1);
+}
+.form__btn:hover {
+  background-color: var(--color--3);
+  outline: 2px solid var(--color--2);
+  color: var(--color--2);
+}
+.form__close-btn {
+  position: absolute;
+  font-size: 28px;
+  top: 5px;
+  right: 5px;
+  transition: all 0.5s;
+}
+.form__close-btn:hover {
+  color: var(--color--1);
+}
+
+.place {
+  background-color: var(--color--2);
+  color: var(--color--1);
+  padding: 18px;
+  border-radius: var(--border-radius--1);
+  margin-top: 18px;
+}
+.place__top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+}
+.place__icon {
+  font-size: 30px;
+  color: var(--color--3);
+}
+.place__title {
+  margin-right: auto;
+}
+.place__rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 300;
+}
+.place__star {
+  color: var(--color--3);
+}
+.place__comment {
+  margin-top: 8px;
+}
+
+#map {
+  flex: 1;
+  height: 100%;
+  background-color: var(--color--1);
+}
+.place-marker {
+  background-color: var(--color--2);
+}
+
+/* Можно и так */
+/* .rating label::before {
+  content: "\2605";
+  font-size: 50px;
+} */
+
+.rating {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+.rating__items {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 4px;
+  cursor: pointer;
+}
+.rating__item {
+  display: none;
+}
+
+.rating__label {
+  cursor: pointer;
+  color: var(--color--1);
+  font-size: 22px;
+  --ionicon-stroke-width: 40px;
+}
+
+.rating__label:hover,
+.rating__label:hover ~ .rating__label {
+  color: var(--color--2);
+}
+
+.rating__item:checked ~ .rating__label {
+  color: var(--color--2);
+}
+/*
+SPACING SYSTEM (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 40 / 48 / 64 / 80 / 96 / 128
+
+FONT SIZE SYSTEM (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 /52 / 62 / 74 / 86 / 98
+*/
+
+/* Popup width is defined in JS using options */
+.leaflet-popup {
+  border-radius: 18px;
+  width: 170px;
+}
+.leaflet-popup .leaflet-popup-content-wrapper {
+  background-color: var(--color--2);
+  color: var(--color--1);
+  /* border-radius: 18px; */
+  padding-right: 0.6rem;
+}
+
+.leaflet-popup .leaflet-popup-content {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  gap: 8px;
+  /* width: 100%; */
+  margin: 10px;
+}
+.leaflet-popup ion-icon {
+  font-size: 24px;
+  color: var(--color--3);
+}
+.leaflet-popup .leaflet-popup-tip {
+  background-color: var(--color--2);
+}
+
+@media screen and (max-width: 930px) {
+  body {
+    padding: 0;
+  }
+  .app {
+    position: relative;
+  }
+  .logo {
+    position: absolute;
+    top: 0;
+    /* left: 0; */
+    right: 0;
+    z-index: 1000;
+    background-color: rgba(240, 235, 228, 0.7);
+    font-size: 12px;
+    padding: 3px;
+  }
+  .logo__title {
+    font-size: 18px;
+  }
+  .logo__icon {
+    font-size: 24px;
+  }
+  .app {
+    flex-direction: column-reverse;
+  }
+  .sidebar {
+    flex-basis: 300px;
+    height: 250px;
+  }
+  .filter-buttons {
+    display: flex;
+    padding: 0;
+    margin-bottom: 8px;
+  }
+  .filter-button {
+    margin: 4px;
+  }
+
+  .form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+  }
+}
