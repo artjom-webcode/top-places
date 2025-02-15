@@ -21,7 +21,6 @@ const containerPlaces = document.querySelector(".places");
 const ratingItems = document.querySelectorAll(".rating__item");
 const filterBtns = document.querySelector(".filter-buttons");
 const formCloseBtn = document.querySelector(".form__close-btn");
-// console.log(filterBtns);
 
 class App {
   constructor() {
@@ -38,24 +37,21 @@ class App {
     form.addEventListener("submit", (e) => this.newPlace(e));
 
     // containerPlaces.addEventListener("click", this.moveToPopup.bind(this));
-    containerPlaces.addEventListener("click", () => this.moveToPopup());
+    containerPlaces.addEventListener("click", (e) => this.moveToPopup(e));
     filterBtns.addEventListener("click", (e) => this.filterPlaces(e));
     formCloseBtn.addEventListener("click", (e) => this.hideForm(e));
     overlay.addEventListener("click", (e) => this.hideForm(e));
     // overlay.addEventListener("click", (e) => this.hideForm.bind(this)(e));
   }
 
-  loadingSpinner() {
-    this.map.on("load", function () {
-      //  document.getElementById("spinner").style.display = "none";
-      console.log("map loaded");
-    });
+  deleteItem(e) {
+    console.log(e.target);
   }
 
   getPosition() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.loadMap.bind(this), function () {
-        console.log("Could not get your position!");
+        alert("Could not get your position!");
       });
     }
   }
@@ -71,7 +67,6 @@ class App {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     })
-
       .addTo(this.map)
       .on("load", () => {
         document.querySelector(".spinner").style.display = "none";
@@ -83,7 +78,7 @@ class App {
 
     if (containerPlaces.innerHTML == "") {
       containerPlaces.innerHTML =
-        "<h4 class='places__text'>Click on map to save your favorite place</h4>";
+        "<h4 class='places__text'>Click on map to save your favorite place. 😀</h4>";
     }
   }
 
@@ -128,8 +123,15 @@ class App {
     this.renderPlaceMarker(place);
 
     // Render place on the list
-    this.renderPlace(place);
+    containerPlaces.innerHTML = "";
+    this.places.forEach((place) => {
+      this.renderPlace(place);
+    });
+    // this.renderPlace(place);
 
+    document.querySelectorAll(".filter-button").forEach((btn) => {
+      btn.classList.remove("filter-button--active");
+    });
     // Hide form + clear input fields
     this.hideForm(e);
 
@@ -173,9 +175,30 @@ class App {
         <p class="place__comment">
           ${place.comment}
         </p>
+        <button class="place__delete">delete</button>
       </li>
     `;
     containerPlaces.insertAdjacentHTML("afterbegin", html);
+
+    document.querySelector(".place__delete").addEventListener("click", (e) => {
+      const placeId = e.target.closest(".place").dataset.id;
+      console.log(placeId);
+      const places = this.places.filter((place) => {
+        return place.id !== placeId;
+      });
+      this.places = places;
+      this.setLocalStorage();
+      containerPlaces.innerHTML = "";
+      this.map.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+          this.map.removeLayer(layer);
+        }
+      });
+      places.forEach((place) => {
+        this.renderPlace(place);
+        this.renderPlaceMarker(place);
+      });
+    });
   }
 
   setLocalStorage() {
@@ -194,8 +217,6 @@ class App {
   }
 
   moveToPopup(e) {
-    // BUGFIX: When we click on a workout before the map has loaded, we get an error. But there is an easy fix:
-
     if (!this.map) return;
 
     const placeEl = e.target.closest(".place");
@@ -229,6 +250,7 @@ class App {
 
     // Filter by type
     let filteredPlaces = this.places.filter((place) => place.type === filterType);
+    console.log(filteredPlaces);
 
     // filter-button--active
     document.querySelectorAll(".filter-button").forEach((btn) => {
@@ -243,6 +265,16 @@ class App {
     e.target.classList.add("filter-button--active");
 
     // show only filtered places
+    console.log(filteredPlaces);
+
+    if (filteredPlaces.length === 0) {
+      containerPlaces.innerHTML = `<h4 class='places__text'>${
+        filterType === "all"
+          ? "Here is no places yet. Click on map add one. 😀"
+          : `Here is no <ion-icon name="${filterType}-outline"></ion-icon> <span>${e.target.innerText.toLowerCase()}</span> yet. Click on map to add one. 😀`
+      }</h4>`;
+    }
+
     filteredPlaces.forEach((place) => {
       this.renderPlace(place);
       this.renderPlaceMarker(place);
