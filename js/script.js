@@ -33,12 +33,22 @@ class App {
     // Get user's position
     this.getPosition();
 
-    this.getLocalStorage();
-    form.addEventListener("submit", this.newPlace.bind(this));
-    containerPlaces.addEventListener("click", this.moveToPopup.bind(this));
-    filterBtns.addEventListener("click", (e) => this.filterPlaces.bind(this)(e));
-    formCloseBtn.addEventListener("click", (e) => this.hideForm.bind(this)(e));
-    overlay.addEventListener("click", (e) => this.hideForm.bind(this)(e));
+    // form.addEventListener("submit", this.newPlace.bind(this));
+    form.addEventListener("submit", (e) => this.newPlace(e));
+
+    // containerPlaces.addEventListener("click", this.moveToPopup.bind(this));
+    containerPlaces.addEventListener("click", () => this.moveToPopup());
+    filterBtns.addEventListener("click", (e) => this.filterPlaces(e));
+    formCloseBtn.addEventListener("click", (e) => this.hideForm(e));
+    overlay.addEventListener("click", (e) => this.hideForm(e));
+    // overlay.addEventListener("click", (e) => this.hideForm.bind(this)(e));
+  }
+
+  loadingSpinner() {
+    this.map.on("load", function () {
+      //  document.getElementById("spinner").style.display = "none";
+      console.log("map loaded");
+    });
   }
 
   getPosition() {
@@ -50,9 +60,6 @@ class App {
   }
 
   loadMap(position) {
-    if (!this.map) {
-      console.log("Loading");
-    }
     const { latitude } = position.coords;
     const { longitude } = position.coords;
     const coords = [latitude, longitude];
@@ -62,11 +69,21 @@ class App {
     L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(this.map);
+    })
+
+      .addTo(this.map)
+      .on("load", () => {
+        document.querySelector(".spinner").style.display = "none";
+      });
 
     // Handling clicks on map
     this.map.on("click", this.showForm.bind(this));
     this.places.forEach((place) => this.renderPlaceMarker(place));
+
+    if (containerPlaces.innerHTML == "") {
+      containerPlaces.innerHTML =
+        "<h4 class='places__text'>Click on map to save your favorite place</h4>";
+    }
   }
 
   showForm(mapE) {
@@ -81,10 +98,11 @@ class App {
     inputComments.value = inputName.value = "";
     ratingItems.forEach((ratingItem) => (ratingItem.checked = false));
 
-    form.style.display = "none";
+    // form.style.display = "none";
+
     form.classList.add("hidden");
     overlay.classList.add("hidden");
-    setTimeout(() => (form.style.display = "block"), 1000);
+    // setTimeout(() => (form.style.display = "block"), 1000);
   }
 
   newPlace(e) {
@@ -232,3 +250,37 @@ class App {
 }
 
 const app = new App();
+
+// class Test {
+//   constructor() {
+//     this.name = "MyApp";
+//     document.body.addEventListener("click", (e) => this.handleClick(e));
+//   }
+
+//   handleClick(e) {
+//     console.log(this);
+
+//     console.log(this.name); // "MyApp"
+//     console.log(e); // Event объект
+//   }
+// }
+
+// const test = new Test();
+
+// class Test {
+//   constructor() {
+//     this.name = "MyApp";
+//     document.body.addEventListener("click", function (e) {
+//       console.log(this);
+
+//       this.handleClick(e);
+//     });
+//   }
+
+//   handleClick(e) {
+//     console.log(this.name); // "MyApp"
+//     console.log(e); // Event объект
+//   }
+// }
+
+// const test = new Test();
