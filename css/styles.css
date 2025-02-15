@@ -242,19 +242,14 @@ button {
 }
 
 #map {
+  position: relative;
   flex: 1;
   height: 100%;
-  background-color: var(--color--1);
+  background-color: var(--color--2);
 }
 .place-marker {
   background-color: var(--color--2);
 }
-
-/* Можно и так */
-/* .rating label::before {
-  content: "\2605";
-  font-size: 50px;
-} */
 
 .rating {
   display: flex;
@@ -368,7 +363,7 @@ FONT SIZE SYSTEM (px)
 }
 
 .spinner {
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

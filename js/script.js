@@ -33,6 +33,7 @@ class App {
     // Get user's position
     this.getPosition();
 
+    this.getLocalStorage();
     // form.addEventListener("submit", this.newPlace.bind(this));
     form.addEventListener("submit", (e) => this.newPlace(e));
 
