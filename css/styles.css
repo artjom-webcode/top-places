@@ -7,9 +7,6 @@
   --color--1: #f0ebe4;
   --color--2: #303131;
   --color--3: #f49a07;
-
-  --border-radius--1: 12px;
-  --font--1: "Josefin Sans", serif;
 }
 
 /*=============== BASE ===============*/
@@ -22,7 +19,6 @@
 body {
   font-family: "Josefin Sans", serif;
   font-size: 14px;
-  /* background-color: var(--color--1); */
   color: var(--color--2);
   padding: 25px;
   height: 100vh;
@@ -56,8 +52,6 @@ button {
 .sidebar {
   flex-basis: 400px;
   background-color: var(--color--1);
-  /* padding: 3rem 5rem 4rem 5rem; */
-  /* padding: 30px 50px 40px 50px; */
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -67,7 +61,6 @@ button {
 }
 .filter-buttons {
   padding: 16px;
-  /* background-color: red; */
 }
 .filter-button {
   border-radius: 12px;
@@ -106,7 +99,6 @@ button {
 
 .places {
   margin-top: 12px;
-  /* height: 77vh; */
 }
 .places::-webkit-scrollbar {
   width: 0;
@@ -114,10 +106,6 @@ button {
 .place {
   cursor: pointer;
   transition: all 0.5s ease;
-}
-.place:hover {
-  /* transform: translateY(-3px); */
-  /* transform: translateX(-100px); */
 }
 
 .form {
@@ -153,11 +141,6 @@ button {
 
 .form.hidden {
   display: none;
-  /* transform: translateY(-30rem); */
-  /* height: 0; */
-  /* padding: 0 20px; */
-  /* margin-bottom: 0; */
-  /* opacity: 0; */
 }
 .form__row {
   display: flex;
@@ -187,7 +170,6 @@ button {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.5s;
-  /* font-weight: 600; */
   font-size: 16px;
   font-family: var(--font--1);
 }
@@ -215,9 +197,7 @@ button {
   padding: 18px;
   border-radius: var(--border-radius--1);
 }
-.place:hover {
-  /* transform: translateX(-10%); */
-}
+
 .place__top {
   display: flex;
   align-items: center;
@@ -263,12 +243,10 @@ button {
   background-color: var(--color--3);
   position: absolute;
   top: -10px;
-  /* transform: translateY(-50%); */
   right: -10px;
   color: var(--color--2);
   font-size: 18px;
   border-radius: 100%;
-  /* z-index: -1; */
   transform: scale(0);
   transition: all 0.9s ease;
 }
@@ -316,13 +294,6 @@ button {
 .rating__item:checked ~ .rating__label {
   color: var(--color--2);
 }
-/*
-SPACING SYSTEM (px)
-2 / 4 / 8 / 12 / 16 / 24 / 32 / 40 / 48 / 64 / 80 / 96 / 128
-
-FONT SIZE SYSTEM (px)
-10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 /52 / 62 / 74 / 86 / 98
-*/
 
 /* Popup width is defined in JS using options */
 .leaflet-popup {
@@ -332,7 +303,6 @@ FONT SIZE SYSTEM (px)
 .leaflet-popup .leaflet-popup-content-wrapper {
   background-color: var(--color--2);
   color: var(--color--1);
-  /* border-radius: 18px; */
   padding-right: 0.6rem;
 }
 
@@ -341,7 +311,6 @@ FONT SIZE SYSTEM (px)
   align-items: center;
   font-size: 14px;
   gap: 8px;
-  /* width: 100%; */
   margin: 10px;
 }
 .leaflet-popup ion-icon {
@@ -350,6 +319,27 @@ FONT SIZE SYSTEM (px)
 }
 .leaflet-popup .leaflet-popup-tip {
   background-color: var(--color--2);
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 5px solid var(--color--1);
+  border-top: 5px solid var(--color--3);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 @media screen and (max-width: 930px) {
@@ -362,7 +352,6 @@ FONT SIZE SYSTEM (px)
   .logo {
     position: absolute;
     top: 0;
-    /* left: 0; */
     right: 0;
     z-index: 1000;
     background-color: rgba(240, 235, 228, 0.7);
@@ -393,26 +382,5 @@ FONT SIZE SYSTEM (px)
 
   .sidebar {
     border-top: 1px solid var(--color--2);
-  }
-}
-
-.spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50px;
-  height: 50px;
-  border: 5px solid var(--color--1);
-  border-top: 5px solid var(--color--3);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-@keyframes spin {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
