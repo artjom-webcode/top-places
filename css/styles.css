@@ -197,7 +197,6 @@ button {
   padding: 18px;
   border-radius: var(--border-radius--1);
 }
-
 .place__top {
   display: flex;
   align-items: center;
@@ -348,6 +347,7 @@ button {
   }
   .app {
     position: relative;
+    flex-direction: column-reverse;
   }
   .logo {
     position: absolute;
@@ -364,23 +364,18 @@ button {
   .logo__icon {
     font-size: 24px;
   }
-  .app {
-    flex-direction: column-reverse;
-  }
   .sidebar {
     flex-basis: 350px;
     height: 250px;
+    border-top: 1px solid var(--color--2);
   }
   .filter-buttons {
     display: flex;
     padding: 0;
     margin-bottom: 8px;
-  }
-  .filter-button {
     margin: 4px;
   }
-
-  .sidebar {
-    border-top: 1px solid var(--color--2);
+  .places__text {
+    font-size: 20px;
   }
 }
