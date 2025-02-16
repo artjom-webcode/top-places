@@ -1,5 +1,15 @@
 "use strict";
 
+const form = document.querySelector(".form");
+const overlay = document.querySelector(".overlay");
+const inputName = document.querySelector(".form__input--name");
+const inputComments = document.querySelector(".form__input--comments");
+const inputType = document.querySelector(".form__input--type");
+const containerPlaces = document.querySelector(".places");
+const ratingItems = document.querySelectorAll(".rating__item");
+const filterBtns = document.querySelector(".filter-buttons");
+const formCloseBtn = document.querySelector(".form__close-btn");
+
 class Place {
   constructor(coords, name, comment, type, rating) {
     this.coords = coords; // [lat, lng]
@@ -12,16 +22,6 @@ class Place {
   }
 }
 
-const form = document.querySelector(".form");
-const overlay = document.querySelector(".overlay");
-const inputName = document.querySelector(".form__input--name");
-const inputComments = document.querySelector(".form__input--comments");
-const inputType = document.querySelector(".form__input--type");
-const containerPlaces = document.querySelector(".places");
-const ratingItems = document.querySelectorAll(".rating__item");
-const filterBtns = document.querySelector(".filter-buttons");
-const formCloseBtn = document.querySelector(".form__close-btn");
-
 class App {
   constructor() {
     this.map = map;
@@ -31,21 +31,13 @@ class App {
 
     // Get user's position
     this.getPosition();
-
     this.getLocalStorage();
-    // form.addEventListener("submit", this.newPlace.bind(this));
     form.addEventListener("submit", (e) => this.newPlace(e));
-
-    containerPlaces.addEventListener("click", (e) => {
-      this.deleteItem(e);
-    });
-
-    // containerPlaces.addEventListener("click", this.moveToPopup.bind(this));
+    containerPlaces.addEventListener("click", (e) => this.deleteItem(e));
     containerPlaces.addEventListener("click", (e) => this.moveToPopup(e));
     filterBtns.addEventListener("click", (e) => this.filterPlaces(e));
     formCloseBtn.addEventListener("click", (e) => this.hideForm(e));
     overlay.addEventListener("click", (e) => this.hideForm(e));
-    // overlay.addEventListener("click", (e) => this.hideForm.bind(this)(e));
   }
 
   deleteItem(e) {
@@ -59,15 +51,15 @@ class App {
     this.places = this.places.filter((place) => place.id !== placeId);
 
     this.setLocalStorage();
-
     placeEl.remove();
-
     this.map.eachLayer((layer) => {
       if (layer instanceof L.Marker) {
         this.map.removeLayer(layer);
       }
     });
-
+    this.places.forEach((place) => {
+      this.renderPlaceMarker(place);
+    });
     if (this.places.length === 0) {
       containerPlaces.innerHTML =
         "<h4 class='places__text'>Click on map to save your favorite place. 😀</h4>";
@@ -88,7 +80,6 @@ class App {
     const coords = [latitude, longitude];
 
     this.map = L.map("map").setView(coords, this.mapZoomLevel);
-
     L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -119,17 +110,12 @@ class App {
     e.preventDefault();
     inputComments.value = inputName.value = "";
     ratingItems.forEach((ratingItem) => (ratingItem.checked = false));
-
-    // form.style.display = "none";
-
     form.classList.add("hidden");
     overlay.classList.add("hidden");
-    // setTimeout(() => (form.style.display = "block"), 1000);
   }
 
   newPlace(e) {
     e.preventDefault();
-
     //Get data form
     const name = inputName.value;
     const comment = inputComments.value;
@@ -153,14 +139,11 @@ class App {
     this.places.forEach((place) => {
       this.renderPlace(place);
     });
-    // this.renderPlace(place);
 
     document.querySelectorAll(".filter-button").forEach((btn) => {
       btn.classList.remove("filter-button--active");
     });
-    // Hide form + clear input fields
     this.hideForm(e);
-
     this.setLocalStorage();
   }
 
@@ -174,7 +157,6 @@ class App {
           autoClose: false,
           closeOnClick: false,
           className: "place-marker",
-          //   className: `${workout.type}-popup`,
         })
       )
       .setPopupContent(` <ion-icon name="${place.type}-outline"></ion-icon>  ${place.name}`)
@@ -182,7 +164,6 @@ class App {
   }
 
   renderPlace(place) {
-    // <ion-icon name="storefront-outline"></ion-icon>;
     let html = `
       <li class="place" data-id="${place.id}">
         <div class="place__top">
@@ -212,10 +193,8 @@ class App {
 
   getLocalStorage() {
     const data = JSON.parse(localStorage.getItem("places"));
-
     if (!data) return;
     this.places = data;
-
     this.places.forEach((place) => {
       this.renderPlace(place);
     });
@@ -223,14 +202,11 @@ class App {
 
   moveToPopup(e) {
     if (!this.map) return;
-
     const placeEl = e.target.closest(".place");
     if (!placeEl) return;
-
     const place = this.places.find(function (place) {
       return place.id === placeEl.dataset.id;
     });
-
     this.map.setView(place.coords, this.mapZoomLevel, {
       animate: true,
       pan: {
@@ -258,15 +234,12 @@ class App {
       btn.classList.remove("filter-button--active");
     });
 
-    if (filterType === "all") {
-      filteredPlaces = this.places;
-    }
+    if (filterType === "all") filteredPlaces = this.places;
 
     containerPlaces.innerHTML = "";
     e.target.classList.add("filter-button--active");
 
     // show only filtered places
-
     if (filteredPlaces.length === 0) {
       containerPlaces.innerHTML = `<h4 class='places__text'>${
         filterType === "all"

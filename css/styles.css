@@ -379,7 +379,7 @@ FONT SIZE SYSTEM (px)
     flex-direction: column-reverse;
   }
   .sidebar {
-    flex-basis: 300px;
+    flex-basis: 350px;
     height: 250px;
   }
   .filter-buttons {
