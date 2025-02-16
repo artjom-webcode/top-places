@@ -36,6 +36,10 @@ class App {
     // form.addEventListener("submit", this.newPlace.bind(this));
     form.addEventListener("submit", (e) => this.newPlace(e));
 
+    containerPlaces.addEventListener("click", (e) => {
+      this.deleteItem(e);
+    });
+
     // containerPlaces.addEventListener("click", this.moveToPopup.bind(this));
     containerPlaces.addEventListener("click", (e) => this.moveToPopup(e));
     filterBtns.addEventListener("click", (e) => this.filterPlaces(e));
@@ -45,7 +49,29 @@ class App {
   }
 
   deleteItem(e) {
-    console.log(e.target);
+    const deleteBtn = e.target.closest(".place__delete");
+    if (!deleteBtn) return;
+
+    const placeEl = deleteBtn.closest(".place");
+    if (!placeEl) return;
+
+    const placeId = placeEl.dataset.id;
+    this.places = this.places.filter((place) => place.id !== placeId);
+
+    this.setLocalStorage();
+
+    placeEl.remove();
+
+    this.map.eachLayer((layer) => {
+      if (layer instanceof L.Marker) {
+        this.map.removeLayer(layer);
+      }
+    });
+
+    if (this.places.length === 0) {
+      containerPlaces.innerHTML =
+        "<h4 class='places__text'>Click on map to save your favorite place. 😀</h4>";
+    }
   }
 
   getPosition() {
@@ -136,7 +162,6 @@ class App {
     this.hideForm(e);
 
     this.setLocalStorage();
-    console.log(this.places);
   }
 
   renderPlaceMarker(place) {
@@ -175,30 +200,10 @@ class App {
         <p class="place__comment">
           ${place.comment}
         </p>
-        <button class="place__delete">delete</button>
+        <button class="place__delete"><ion-icon name="trash-outline"></ion-icon></button>
       </li>
     `;
     containerPlaces.insertAdjacentHTML("afterbegin", html);
-
-    document.querySelector(".place__delete").addEventListener("click", (e) => {
-      const placeId = e.target.closest(".place").dataset.id;
-      console.log(placeId);
-      const places = this.places.filter((place) => {
-        return place.id !== placeId;
-      });
-      this.places = places;
-      this.setLocalStorage();
-      containerPlaces.innerHTML = "";
-      this.map.eachLayer((layer) => {
-        if (layer instanceof L.Marker) {
-          this.map.removeLayer(layer);
-        }
-      });
-      places.forEach((place) => {
-        this.renderPlace(place);
-        this.renderPlaceMarker(place);
-      });
-    });
   }
 
   setLocalStorage() {
@@ -225,7 +230,6 @@ class App {
     const place = this.places.find(function (place) {
       return place.id === placeEl.dataset.id;
     });
-    // console.log(place);
 
     this.map.setView(place.coords, this.mapZoomLevel, {
       animate: true,
@@ -239,8 +243,6 @@ class App {
     const filterType = e.target.dataset.filter;
     if (!filterType) return;
 
-    console.log(filterType);
-
     // Delete all markers
     this.map.eachLayer((layer) => {
       if (layer instanceof L.Marker) {
@@ -250,7 +252,6 @@ class App {
 
     // Filter by type
     let filteredPlaces = this.places.filter((place) => place.type === filterType);
-    console.log(filteredPlaces);
 
     // filter-button--active
     document.querySelectorAll(".filter-button").forEach((btn) => {
@@ -265,7 +266,6 @@ class App {
     e.target.classList.add("filter-button--active");
 
     // show only filtered places
-    console.log(filteredPlaces);
 
     if (filteredPlaces.length === 0) {
       containerPlaces.innerHTML = `<h4 class='places__text'>${
@@ -283,37 +283,3 @@ class App {
 }
 
 const app = new App();
-
-// class Test {
-//   constructor() {
-//     this.name = "MyApp";
-//     document.body.addEventListener("click", (e) => this.handleClick(e));
-//   }
-
-//   handleClick(e) {
-//     console.log(this);
-
-//     console.log(this.name); // "MyApp"
-//     console.log(e); // Event объект
-//   }
-// }
-
-// const test = new Test();
-
-// class Test {
-//   constructor() {
-//     this.name = "MyApp";
-//     document.body.addEventListener("click", function (e) {
-//       console.log(this);
-
-//       this.handleClick(e);
-//     });
-//   }
-
-//   handleClick(e) {
-//     console.log(this.name); // "MyApp"
-//     console.log(e); // Event объект
-//   }
-// }
-
-// const test = new Test();

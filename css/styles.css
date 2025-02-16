@@ -116,7 +116,7 @@ button {
   transition: all 0.5s ease;
 }
 .place:hover {
-  transform: translateY(-3px);
+  /* transform: translateY(-3px); */
   /* transform: translateX(-100px); */
 }
 
@@ -208,11 +208,15 @@ button {
 }
 
 .place {
+  margin: 10px;
+  position: relative;
   background-color: var(--color--2);
   color: var(--color--1);
   padding: 18px;
   border-radius: var(--border-radius--1);
-  margin-top: 18px;
+}
+.place:hover {
+  /* transform: translateX(-10%); */
 }
 .place__top {
   display: flex;
@@ -251,6 +255,25 @@ button {
   color: var(--color--3);
   font-weight: 600;
   font-size: 28px;
+}
+.place__delete {
+  width: 38px;
+  height: 38px;
+  padding: 8px;
+  background-color: var(--color--3);
+  position: absolute;
+  top: -10px;
+  /* transform: translateY(-50%); */
+  right: -10px;
+  color: var(--color--2);
+  font-size: 18px;
+  border-radius: 100%;
+  /* z-index: -1; */
+  transform: scale(0);
+  transition: all 0.9s ease;
+}
+.place:hover .place__delete {
+  transform: scale(1);
 }
 #map {
   position: relative;
