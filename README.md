@@ -1,6 +1,7 @@
 ## 📍 My Favorite Places Map
 
 A simple interactive map web app where users can save, view, and filter their favorite places like stores, bars, restaurants.
+![](screenshot.png)
 
 ### 🔥 Features
 
@@ -39,4 +40,3 @@ A simple interactive map web app where users can save, view, and filter their fa
 or
 
 https://artjom-webcode.github.io/top-places/
-
