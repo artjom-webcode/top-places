@@ -57,6 +57,7 @@ button {
   flex-direction: column;
 }
 .wrapper {
+  scrollbar-width: none;
   overflow-y: scroll;
 }
 .filter-buttons {
@@ -195,7 +196,7 @@ button {
   background-color: var(--color--2);
   color: var(--color--1);
   padding: 18px;
-  border-radius: var(--border-radius--1);
+  border-radius: 8px;
 }
 .place__top {
   display: flex;
@@ -371,6 +372,7 @@ button {
   }
   .filter-buttons {
     display: flex;
+    gap: 4px;
     padding: 0;
     margin-bottom: 8px;
     margin: 4px;
