@@ -21,7 +21,7 @@ body {
   font-size: 14px;
   color: var(--color--2);
   padding: 25px;
-  height: 100vh;
+  height: 100dvh;
 }
 
 ul {
