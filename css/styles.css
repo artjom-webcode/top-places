@@ -152,6 +152,11 @@ button {
 .form__label {
   font-size: 16px;
 }
+.form__input--name,
+.form__input--comments,
+.form__input--type {
+  font-size: 16px;
+}
 .form__input {
   padding: 8px;
   border: 2px solid var(--color--2);
